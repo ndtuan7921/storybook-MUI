@@ -4,9 +4,10 @@ import Menu from "@mui/material/Menu";
 import { Button } from "@mui/material";
 import Typography from "../../DataDisplay/Typography";
 import CircleIcon from "@mui/icons-material/Circle";
+import { selectOption } from "./option";
 
 interface SelectProps {
-  options: any[];
+  options: selectOption[];
 }
 
 export default function Select({ ...props }: SelectProps) {
