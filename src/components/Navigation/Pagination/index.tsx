@@ -1,10 +1,26 @@
-import * as React from "react";
-import TablePagination from "@mui/material/TablePagination";
-import { Pagination, PaginationItem } from "@mui/material";
+import {
+  Box,
+  Pagination as MuiPagination,
+  TablePagination as MuiTablePagination,
+} from "@mui/material";
+import { useState } from "react";
+import Typography from "../../DataDisplay/Typography";
+import TextField from "../../Input/TextField";
 
-export default function TablePaginationDemo() {
-  const [page, setPage] = React.useState(2);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+interface PaginationProps {
+  count: number;
+  labelRowsPerPage?: string;
+  rowsPerPageOptions?: number[];
+}
+
+export default function Pagination(props: PaginationProps) {
+  const {
+    count,
+    labelRowsPerPage = "Số hàng mỗi trang",
+    rowsPerPageOptions,
+  } = props;
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -21,68 +37,71 @@ export default function TablePaginationDemo() {
   };
 
   return (
-    <TablePagination
-      sx={{
-        "& .MuiToolbar-root": {
-          columnGap: "0.75rem",
-        },
-        "& .css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
-          marginRight: "8px",
-        },
-        "& .MuiTablePagination-spacer": {
-          flex: "0",
-        },
-        ".css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected": {
-          color: "#3662ce",
-          backgroundColor: "#e2e8f7",
-          border: "1px solid #3662ce",
-        },
-      }}
-      component={"div"}
-      count={100}
-      page={page}
-      onPageChange={handleChangePage}
-      rowsPerPage={rowsPerPage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-      labelRowsPerPage={"Số hàng trên mỗi trang"}
-      labelDisplayedRows={({ from, to, count }) => {
-        return `${from}–${to} / ${count !== -1 ? count : `more than ${to}`}`;
-      }}
-      ActionsComponent={() => {
-        return (
+    <Box sx={{ display: "flex", columnGap: "10px" }}>
+      <MuiTablePagination
+        sx={{
+          "& .MuiToolbar-root": {
+            columnGap: "0.75rem",
+          },
+          "& .css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+            marginRight: "8px",
+          },
+          "& .MuiTablePagination-spacer": {
+            flex: "0",
+          },
+          ".css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
+            {
+              color: "#3662ce",
+              backgroundColor: "#e2e8f7",
+              border: "1px solid #3662ce",
+            },
+        }}
+        component={"div"}
+        count={count}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPageOptions={rowsPerPageOptions}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage={
           <>
-            <Pagination
-              variant="outlined"
-              shape="rounded"
-              count={100 / rowsPerPage}
-              page={page}
-              showFirstButton
-              showLastButton
-              onChange={(e: any) => {
-                console.log("page:\t", page);
-                console.log(e);
-                // handleChangePage(e, parseInt(e.target.innerText));
-              }}
-              renderItem={(item) => (
-                <PaginationItem
-                  components={{
-                    last: (props) => <button {...props}>Last</button>,
-                    next: (props) => <button {...props}>Next</button>,
-                    first: (props) => <button {...props}>First</button>,
-                    previous: (props) => <button {...props}>Previous</button>,
-                  }}
-                  {...item}
-                />
-              )}
-            />
+            <Typography text={labelRowsPerPage} />
           </>
-        );
-      }}
-    />
+        }
+        labelDisplayedRows={({ from, to, count }) => (
+          <Typography
+            text={`${from}–${to} / ${count !== -1 ? count : `more than ${to}`}`}
+          />
+        )}
+        ActionsComponent={() => {
+          return (
+            <>
+              <MuiPagination
+                variant="outlined"
+                shape="rounded"
+                count={Math.ceil(count / rowsPerPage)}
+                page={page + 1}
+                showFirstButton
+                showLastButton
+                onChange={(e: any, current: number) =>
+                  handleChangePage(e, current - 1)
+                }
+              />
+            </>
+          );
+        }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+
+          alignItems: "center",
+          columnGap: "8px",
+        }}
+      >
+        <Typography text={"Đến trang"} />
+        <TextField />
+      </Box>
+    </Box>
   );
 }
-/*
-first/last button
-last page
-pagination items quality
-*/

@@ -6,11 +6,11 @@ import {
 type TypographyBaseProps = Pick<MuiTypographyProps, "variant" | "color">;
 
 interface TypographyProps extends TypographyBaseProps {
-  text: string;
+  text: string | null;
 }
 
 function Typography(props: TypographyProps) {
-  const { text, variant, color = "#000000" } = props;
+  const { text = "default text", variant, color = "#000000" } = props;
 
   return (
     <>
