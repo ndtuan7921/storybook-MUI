@@ -1,10 +1,23 @@
+import { ThemeProvider } from "@mui/material";
 import "./App.css";
 import Pagination from "./components/Navigation/Pagination";
+import typography from "./assets/overrides/typography";
+import Typography from "./components/DataDisplay/Typography";
+import Table from "./components/Table";
+import Heading from "./components/DataDisplay/Heading";
 
 function App() {
   return (
     <>
-      <Pagination count={100} rowsPerPageOptions={[10, 20, 30]} />
+      <ThemeProvider theme={typography}>
+        <Heading text={"Heading"} variant="h1" />
+        <Heading text={"Heading"} variant="h2" />
+        <Heading text={"Heading"} variant="h3" />
+        <Heading text={"Heading"} variant="h4" />
+        <Heading text={"Heading"} variant="h5" />
+        <Heading text={"Heading"} variant="h6" />
+      </ThemeProvider>
+      <Table />
     </>
   );
 }

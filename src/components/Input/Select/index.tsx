@@ -4,14 +4,14 @@ import Menu from "@mui/material/Menu";
 import { Button } from "@mui/material";
 import Typography from "../../DataDisplay/Typography";
 import CircleIcon from "@mui/icons-material/Circle";
-import { selectOption } from "./option";
+import { selectOption, selectOptions } from "./option";
 
 interface SelectProps {
-  options: selectOption[];
+  options?: selectOption[];
 }
 
 export default function Select({ ...props }: SelectProps) {
-  const { options } = props;
+  const { options = selectOptions } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const open = Boolean(anchorEl);

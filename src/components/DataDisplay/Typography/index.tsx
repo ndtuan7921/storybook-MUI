@@ -6,7 +6,7 @@ import {
 type TypographyBaseProps = Pick<MuiTypographyProps, "variant" | "color">;
 
 interface TypographyProps extends TypographyBaseProps {
-  text: string | null;
+  text: string;
 }
 
 function Typography(props: TypographyProps) {
